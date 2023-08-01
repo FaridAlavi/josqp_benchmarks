@@ -4,7 +4,7 @@ function run_qps_files()
 
     org_stdout = stdout;
 
-    listQpProblems = "Benchmarking_Procedure/qp_problem_list.txt";
+    listQpProblems = "Procedures/qp_problem_list.txt";
     fileNames = readlines(listQpProblems);
     qps_dir = "QP_Problems/";
 
@@ -23,7 +23,7 @@ function run_qps_files()
         try
             # solving the problem of the QPS file
             qpsFilePath = qps_dir * fileName;
-            run(`java -jar ./Benchmarking_Procedure/Bin/josqp.jar $(qpsFilePath)`);
+            run(`java -jar ./Procedures/bin/josqp.jar $(qpsFilePath)`);
             defLogFileName = "josqp.log";
             dstLogFileName = "./Solvers_Logs/JOSQP/QP/" * "josqp_" * chop(fileName, tail=4) * ".log";
             mv(defLogFileName, dstLogFileName, force=true);

@@ -8,7 +8,7 @@ function run_qps_files()
 
     org_stdout = stdout;
 
-    listQpProblems = "Benchmarking_Procedure/qp_problem_list.txt";
+    listQpProblems = "Procedures/qp_problem_list.txt";
     fileNames = readlines(listQpProblems);
     qps_dir = "QP_Problems/";;
     for fileName in fileNames
