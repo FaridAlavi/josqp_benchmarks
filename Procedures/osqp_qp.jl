@@ -43,7 +43,7 @@ function run_qps_files()
 
         # passing the problem to OSQP
         model = OSQP.Model();
-        OSQP.setup!(model; P=P, q=q, A=A, l=l, u=u);
+        OSQP.setup!(model; P=P, q=q, A=A, l=l, u=u, max_iter=100000);
         results = OSQP.solve!(model);
 
         # closing the log file
