@@ -14,10 +14,11 @@ for line in lines:
     # skip the lines that are not QPS files
     if sline[len(sline)-4:len(sline)] != '.qps':
         continue
+    print(sline)
     for solver in solvers:
         try:
             sol = getsol(sline, solver)
-            print(sol)
+            print(solver, '\t', sol)
         except:
             print("Error in reading the log file of the problem ", sline, " for the solver ", solver)
             print("The analysis aborted!")
