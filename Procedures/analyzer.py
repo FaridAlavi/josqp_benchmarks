@@ -27,14 +27,11 @@ for line in lines:
         try:
             sol = getsol(sline, solver)
             solDict[solver] = sol
-            #print(solver, '\t', sol)
         except:
             print("Error in reading the log file of the problem ", sline, " for the solver ", solver)
             print("The analysis aborted!")
     solCollectionDict[problemName] = solDict
 print('Finished processing {} test cases.'.format(probCnt))
-
-#saveResultInCsv(solCollectionDict, 'Results/result.csv')
 
 # Writing the report
 createReport(solCollectionDict)

@@ -2,7 +2,7 @@ from analyzer_utils.common_def import *
 import os.path
 
 def getsol(problemName, solver):
-    result = {} #{"solution status": "uninitialized", "optimal value": 0.0, "run time": 0.0}
+    result = {}
     problemNameS = problemName.strip()
     if solver == "Gurobi":
         filePath = 'Solvers_Logs/Gurobi/QP/' + 'grb_' + problemNameS[0:len(problemNameS)-4] + '.log'
@@ -19,6 +19,26 @@ def getsol(problemName, solver):
                 optObj = float(tokens[1].strip())
                 result["solution status"] = Sol_Status.SOLVED
                 result["optimal value"]   = optObj
+            elif 'Sub-optimal termination - objective' in line:
+                tokens = line.split('Sub-optimal termination - objective')
+                optObj = float(tokens[1].strip())
+                result["solution status"] = Sol_Status.SUBOPTIMAL
+                result["optimal value"]   = optObj
+                if 'seconds' in prevLine:
+                    tokens = prevLine.split(' ')
+                    i = tokens.index('seconds') - 1
+                    runTime = float(tokens[i])
+                    result['run time'] = runTime
+            elif 'I ' in line:
+                tokens = line.split(' ')
+                optObj = float(tokens[1].strip())
+                result['solution status'] = Sol_Status.SUBOPTIMAL
+                result['optimal value']   = optObj
+                if 'seconds' in prevLine:
+                    tokens = prevLine.split(' ')
+                    i = tokens.index('seconds') - 1
+                    runTime = float(tokens[i])
+                    result['run time'] = runTime
             elif 'solved model in' in line:
                 tokens = line.split(' ')
                 i = tokens.index('seconds') - 1
@@ -28,6 +48,7 @@ def getsol(problemName, solver):
                 result['solution status'] = Sol_Status.NOT_SOLVED
             elif 'Sub-optimal termination' in line:
                 result['solution status'] = Sol_Status.SUBOPTIMAL
+            prevLine = line
         if len(result) == 0:
             print("Error in parsing the log file ", problemNameS)
     elif solver == "OSQP":
