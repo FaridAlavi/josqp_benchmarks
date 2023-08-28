@@ -3,3 +3,5 @@ Procedures/venv/
 Procedures/.vscode
 Procedures/.idea
 venv/
+QP_Problems/*.qps
+
