@@ -17,6 +17,7 @@ function run_qps_files()
         if fileName[1] == '*'
             continue;
         end
+        fileName = strip(fileName);
         # only for QPS files
         if split(fileName, '.')[end] != "qps"
             continue;
