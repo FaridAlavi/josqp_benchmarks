@@ -1,3 +1,5 @@
 *
 */
 !.gitignore
+!report_QPLIB.txt
+!report_MarosMeszaros.txt
