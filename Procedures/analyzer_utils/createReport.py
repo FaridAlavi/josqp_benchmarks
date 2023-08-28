@@ -1,8 +1,11 @@
+import numpy as np
+
 def createReport(solCollectionDict):
     report  = '\t|\t\t|               Optimal objecive                |               Run time\t\n'
     report += 'Check\t|Test\t\t|-----------------------------------------------|------------------------------------\n'
     report += '\t|\t\t|Gurobi\t\tOSQP\t\tJOSQP\t\t|Gurobi\t\tOSQP\t\tJOSQP\n'
     report += '-----\t----\t\t------         ----            -----            ------         ----            -----\n'
+    runTimes = {'Gruobi': [], 'OSQP': [], 'JOSQP': []}
     for probName, solDict in solCollectionDict.items():
         attentionReq = False
         line = '\t|{}\t|'.format(probName)
@@ -11,6 +14,7 @@ def createReport(solCollectionDict):
         if 'Gurobi' in solDict.keys():
             sol = solDict['Gurobi']
             if objKeyName in sol.keys():
+                grbObjAux = sol[objKeyName]
                 grbObj = '{:.3e}'.format(sol[objKeyName])
             else:
                 grbObj = '-'
@@ -27,6 +31,7 @@ def createReport(solCollectionDict):
         if 'OSQP' in solDict.keys():
             sol = solDict['OSQP']
             if objKeyName in sol.keys():
+                osqpObjAux = sol[objKeyName]
                 osqpObj = '{:.3e}'.format(sol[objKeyName])
             else:
                 osqpObj = '-'
@@ -43,6 +48,7 @@ def createReport(solCollectionDict):
         if 'JOSQP' in solDict.keys():
             sol = solDict['JOSQP']
             if objKeyName in sol.keys():
+                josqpObjAux = sol[objKeyName]
                 josqpObj = '{:.3e}'.format(sol[objKeyName])
             else:
                 josqpObj = '-'
@@ -56,10 +62,19 @@ def createReport(solCollectionDict):
             josqpObj = '-'
             josqpRunTime = '-'
             attentionReq = True
+        # If the optimal points found by the solvers do not match, raise attentionReq flag.
+        if not attentionReq:
+            relTol = 1e-1
+            if not grbObjAux == 0.0:
+                if abs((osqpObjAux - grbObjAux) / grbObjAux) > relTol or abs((josqpObjAux - grbObjAux) / grbObjAux) > relTol:
+                    attentionReq = True
+            else:
+                if abs(osqpObjAux - grbObjAux) > relTol or abs(josqpObjAux - grbObjAux) > relTol:
+                    attentionReq = True
         if attentionReq:
             attention = '*\t'
         else:
-            attention = '\t'
+            attention = ' \t'
         # Adjusting the length of strings
         probName     = adjLen(probName)
         grbObj       = adjLen(grbObj)
@@ -69,8 +84,29 @@ def createReport(solCollectionDict):
         osqpRunTime  = adjLen(osqpRunTime)
         josqpRunTime = adjLen(josqpRunTime)
         line = '{}|{}|{}{}{}{}{}{}\n'.format(attention, probName, grbObj, osqpObj, josqpObj, grbRunTime, osqpRunTime, josqpRunTime)
+        # updating the run times
+        if not attentionReq:
+            runTimes['Gruobi'].append(float(grbRunTime))
+            runTimes['OSQP'].append(float(osqpRunTime))
+            runTimes['JOSQP'].append(float(josqpRunTime))
         report += line
-                
+
+    nValidRslts = len(runTimes['Gruobi'])
+    if nValidRslts > 0:
+        grbRunTimeGeoMean    = pow(np.prod(runTimes['Gruobi']), 1.0 / nValidRslts)
+        grbRunTimeArthMean   = np.sum(runTimes['Gruobi']) / nValidRslts
+        osqpRunTimeGeoMean   = pow(np.prod(runTimes['OSQP']), 1.0 / nValidRslts)
+        osqpRunTimeArthMean  = np.sum(runTimes['OSQP']) / nValidRslts
+        josqpRunTimeGeoMean  = pow(np.prod(runTimes['JOSQP']), 1.0 / nValidRslts)
+        josqpRunTimeArthMean = np.sum(runTimes['JOSQP']) / nValidRslts
+
+        fullDashLine = '-------------------------------------------------------------------------------------------------------------\n'
+        report += fullDashLine
+        line = '\t\t\t\t\t\tArithmetic mean\t\t{:.2f}\t\t{:.2f}\t\t{:.2f}\n'.format(grbRunTimeArthMean, osqpRunTimeArthMean, josqpRunTimeArthMean)
+        report += line
+        line = '\t\t\t\t\t\tGeometric mean\t\t{:.2f}\t\t{:.2f}\t\t{:.2f}\n'.format(grbRunTimeGeoMean, osqpRunTimeGeoMean, josqpRunTimeGeoMean)
+        report += line
+
     reportFile = open('Results/report.txt', 'w')
     reportFile.writelines(report)
     reportFile.close()
