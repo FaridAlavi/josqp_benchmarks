@@ -1,5 +1,5 @@
 ************************
-* very easy problems   *
+* Maros-Meszaros       *
 ************************
 q25fv47.qps
 qadlittl.qps
@@ -45,9 +45,6 @@ qship12s.qps
 qsierra.qps
 qstair.qps
 qstandat.qps
-************************
-* easy problems        *
-************************
 hues-mod.qps
 dual4.qps
 stcqp1.qps
@@ -95,6 +92,16 @@ hs53.qps
 cvxqp1_l.qps
 liswet6.qps
 tame.qps
+xdata.qps
+laser.qps
+qforplan.qps
+qgfrdxpn.qps
+qptest.qps
+selfqmin.qps
+stadat1.qps
+stadat2.qps
+stadat3.qps
+values.qps
 liswet2.qps
 primalc1.qps
 zecevic2.qps
@@ -125,9 +132,6 @@ aug3dcqp.qps
 genhs28.qps
 dualc2.qps
 boyd1.qps
-************************
-* medium easy problems *
-************************
 boyd2.qps
 cont-050.qps
 cont-100.qps
@@ -136,3 +140,25 @@ cont-200.qps
 cont-201.qps
 cont-300.qps
 dpklo1.qps
+************************
+* QPLIB problems       *
+************************
+*qplib_10038.qps	 	
+*qplib_10034.qps	 
+*qplib_9008.qps
+*qplib_9002.qps
+*qplib_8991.qps
+*qplib_8938.qps	
+*qplib_8906.qps
+*qplib_8845.qps
+*qplib_8792.qps
+*qplib_8790.qps
+*qplib_8785.qps	
+*qplib_8616.qps	
+*qplib_8602.qps	 
+*qplib_8567.qps
+*qplib_8559.qps
+*qplib_8547.qps
+*qplib_8515.qps
+*qplib_8500.qps
+*qplib_8495.qps
