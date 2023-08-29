@@ -42,7 +42,7 @@ You can review individual log files in the `Solvers_Logs` directory.
 | Arithmetic mean         | 0.28   | 3.59  | 1.74  |
 | Shifted geometric mean  | 1.00   | 3.57  | 3.47  |
 
-### QPLIB problem set
+### QPLIB Problem Set
 
 Within the QPLIB problem set, a subset of problems meets the requirements of the OSQP and JOSQP solvers (convex and quadratic cost function, linear constraints, and continuous variables). This table summarizes the outcomes for this specific subset. For problems successfully solved by all three solvers, the shifted geometric mean is as follows:
 
