@@ -91,20 +91,29 @@ def createReport(solCollectionDict):
             runTimes['JOSQP'].append(float(josqpRunTime))
         report += line
 
+    sh = 10
     nValidRslts = len(runTimes['Gruobi'])
     if nValidRslts > 0:
-        grbRunTimeGeoMean    = pow(np.prod(runTimes['Gruobi']), 1.0 / nValidRslts)
+        grbRunTimeShifted    = np.add(runTimes['Gruobi'], sh)
+        grbRunTimeGeoMean    = pow(np.prod(grbRunTimeShifted),   1.0 / nValidRslts) - sh
         grbRunTimeArthMean   = np.sum(runTimes['Gruobi']) / nValidRslts
-        osqpRunTimeGeoMean   = pow(np.prod(runTimes['OSQP']), 1.0 / nValidRslts)
+        osqpRunTimeShifted   = np.add(runTimes['OSQP'],   sh)
+        osqpRunTimeGeoMean   = pow(np.prod(osqpRunTimeShifted),  1.0 / nValidRslts) - sh
         osqpRunTimeArthMean  = np.sum(runTimes['OSQP']) / nValidRslts
-        josqpRunTimeGeoMean  = pow(np.prod(runTimes['JOSQP']), 1.0 / nValidRslts)
+        josqpRunTimeShifted  = np.add(runTimes['JOSQP'],  sh)
+        josqpRunTimeGeoMean  = pow(np.prod(josqpRunTimeShifted), 1.0 / nValidRslts) - sh
         josqpRunTimeArthMean = np.sum(runTimes['JOSQP']) / nValidRslts
+        
+        minGeoMean = min(grbRunTimeGeoMean, min(osqpRunTimeGeoMean, josqpRunTimeGeoMean))
+        grbRunTimeShiftedGeoMean   = grbRunTimeGeoMean   / minGeoMean
+        osqpRunTimeShiftedGeoMean  = osqpRunTimeGeoMean  / minGeoMean
+        josqpRunTimeShiftedGeoMean = josqpRunTimeGeoMean / minGeoMean
 
         fullDashLine = '-------------------------------------------------------------------------------------------------------------\n'
         report += fullDashLine
         line = '\t\t\t\t\t\tArithmetic mean\t\t{:.2f}\t\t{:.2f}\t\t{:.2f}\n'.format(grbRunTimeArthMean, osqpRunTimeArthMean, josqpRunTimeArthMean)
         report += line
-        line = '\t\t\t\t\t\tGeometric mean\t\t{:.2f}\t\t{:.2f}\t\t{:.2f}\n'.format(grbRunTimeGeoMean, osqpRunTimeGeoMean, josqpRunTimeGeoMean)
+        line = '\t\t\t\t\t Shifted geometric mean\t\t{:.2f}\t\t{:.2f}\t\t{:.2f}\n'.format(grbRunTimeShiftedGeoMean, osqpRunTimeShiftedGeoMean, josqpRunTimeShiftedGeoMean)
         report += line
 
     reportFile = open('Results/report.txt', 'w')
