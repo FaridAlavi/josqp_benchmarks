@@ -44,8 +44,6 @@ You can review individual log files in the `Solvers_Logs` directory.
 
 ### QPLIB Problem Set
 
-Within the QPLIB problem set, a subset of problems meets the requirements of the OSQP and JOSQP solvers (convex and quadratic cost function, linear constraints, and continuous variables). This table summarizes the outcomes for this specific subset. For problems successfully solved by all three solvers, the shifted geometric mean is as follows:
-
 Within the QPLIB problem set, a subset of problems meets the requirements of the OSQP and JOSQP solvers (convex and quadratic cost function, linear constraints, and continuous variables). [This table](/Results/report_QPLIB.txt) summerized the outcomes for this specific subset. For the problems that could be solved correctly by all three solvers (the ones without a * in the first column), the arithmetic mean and the shifted geometric mean are as follows:
 
 |                         | Gurobi | OSQP  | JOSQP |
