@@ -40,7 +40,7 @@ You can review individual log files in the `Solvers_Logs` directory.
 |                         | Gurobi | OSQP  | JOSQP |
 | :---                    | :---:  | :---: | :---: |
 | Arithmetic mean         | 0.28   | 3.59  | 1.74  |
-| Shifted geometric mean  | 1.00   | 3.57  | 3.47  |
+| Shifted geometric mean  | 1.00   | 1.14  | 1.19  |
 
 ### QPLIB Problem Set
 
@@ -49,7 +49,7 @@ Within the QPLIB problem set, a subset of problems meets the requirements of the
 |                         | Gurobi | OSQP  | JOSQP |
 | :---                    | :---:  | :---: | :---: |
 | Arithmetic mean         | 4.86   | 7.09  | 3.92  |
-| Shifted geometric mean  | 1.17   | 1.47  | 1.00  |
+| Shifted geometric mean  | 1.02   | 1.20  | 1.00  |
 
 ## Remarks
 

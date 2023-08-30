@@ -91,17 +91,17 @@ def createReport(solCollectionDict):
             runTimes['JOSQP'].append(float(josqpRunTime))
         report += line
 
-    sh = 10
+    sh = 1
     nValidRslts = len(runTimes['Gruobi'])
     if nValidRslts > 0:
         grbRunTimeShifted    = np.add(runTimes['Gruobi'], sh)
-        grbRunTimeGeoMean    = pow(np.prod(grbRunTimeShifted),   1.0 / nValidRslts) - sh
+        grbRunTimeGeoMean    = pow(np.prod(grbRunTimeShifted)   - sh, 1.0 / nValidRslts)
         grbRunTimeArthMean   = np.sum(runTimes['Gruobi']) / nValidRslts
         osqpRunTimeShifted   = np.add(runTimes['OSQP'],   sh)
-        osqpRunTimeGeoMean   = pow(np.prod(osqpRunTimeShifted),  1.0 / nValidRslts) - sh
+        osqpRunTimeGeoMean   = pow(np.prod(osqpRunTimeShifted)  - sh, 1.0 / nValidRslts)
         osqpRunTimeArthMean  = np.sum(runTimes['OSQP']) / nValidRslts
         josqpRunTimeShifted  = np.add(runTimes['JOSQP'],  sh)
-        josqpRunTimeGeoMean  = pow(np.prod(josqpRunTimeShifted), 1.0 / nValidRslts) - sh
+        josqpRunTimeGeoMean  = pow(np.prod(josqpRunTimeShifted) - sh, 1.0 / nValidRslts)
         josqpRunTimeArthMean = np.sum(runTimes['JOSQP']) / nValidRslts
         
         minGeoMean = min(grbRunTimeGeoMean, min(osqpRunTimeGeoMean, josqpRunTimeGeoMean))
