@@ -1,6 +1,6 @@
 # JOSQP Benchmarking
 
-This repository has been created to conduct a benchmark assessing the performance of the solver JOSQP in comparison to two other solvers, namely OSQP and Gurobi.
+This repository has been created to conduct a benchmark assessing the performance of the solver [JOSQP](https://github.com/quantego/josqp) in comparison to two other solvers, namely OSQP and Gurobi.
 
 In our study, we consider two sets of QP problems:
 
